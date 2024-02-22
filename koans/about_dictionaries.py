@@ -42,17 +42,18 @@ class AboutDictionaries(Koan):
     def test_dictionary_keys_and_values(self):
         babel_fish = {'one': 'uno', 'two': 'dos'}
         print(babel_fish.keys())
+        print('one' in babel_fish.keys())
         self.assertEqual(2, len(babel_fish.keys()))
-        self.assertEqual(__, len(babel_fish.values()))
-        self.assertEqual(__, 'one' in babel_fish.keys())
-        self.assertEqual(__, 'two' in babel_fish.values())
-        self.assertEqual(__, 'uno' in babel_fish.keys())
-        self.assertEqual(__, 'dos' in babel_fish.values())
+        self.assertEqual(2, len(babel_fish.values()))
+        self.assertEqual(True, 'one' in babel_fish.keys())
+        self.assertEqual(False, 'two' in babel_fish.values())
+        self.assertEqual(False, 'uno' in babel_fish.keys())
+        self.assertEqual(True, 'dos' in babel_fish.values())
 
     def test_making_a_dictionary_from_a_sequence_of_keys(self):
         cards = {}.fromkeys(('red warrior', 'green elf', 'blue valkyrie', 'yellow dwarf', 'confused looking zebra'), 42)
-
-        self.assertEqual(__, len(cards))
-        self.assertEqual(__, cards['green elf'])
-        self.assertEqual(__, cards['yellow dwarf'])
+        # cards = dict(zip(('red warrior', 'green elf', 'blue valkyrie', 'yellow dwarf', 'confused looking zebra'), [10, 5, 8, 12,1]))
+        self.assertEqual(5, len(cards))
+        self.assertEqual(42, cards['green elf'])
+        self.assertEqual(42, cards['yellow dwarf'])
 
