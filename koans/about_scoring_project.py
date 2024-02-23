@@ -31,10 +31,38 @@ from runner.koan import *
 # More scoring examples are given in the tests below:
 #
 # Your goal is to write the score method.
+def create_dict(dice):
+    value_dict = dict()
+    for i in dice:
+        if i in value_dict:
+            value_dict[i]+=1
+        else: value_dict[i] = 1
+    return value_dict
+    
+def get_score(key, val):
+    if val >= 3:
+        if key == 1:
+            return 1000 + (val-3)*100
+        elif key == 5:
+            return 500 + (val-3)*50
+        return key*100
+    elif key == 1:
+        return 100*val
+    elif key == 5:
+        return 50*val
+    return 0 
+
 
 def score(dice):
-    # You need to write this method
-    pass
+    score = 0
+    if len(dice)==0:
+        return score
+    value_dict = create_dict(dice)
+    print(value_dict)
+    for key,val in value_dict.items():
+        score += get_score(key,val)
+    return score
+
 
 class AboutScoringProject(Koan):
     def test_score_of_an_empty_list_is_zero(self):
