@@ -16,17 +16,44 @@
 # Note: This is a bit trickier than its Ruby Koans counterpart, but you
 # can do it!
 
+from typing import Any
 from runner.koan import *
 
 class Proxy:
     def __init__(self, target_object):
         # WRITE CODE HERE
-
         #initialize '_obj' attribute last. Trust me on this!
-        self._obj = target_object
+        object.__setattr__(self, '_messages', list())
+        object.__setattr__(self, '_obj', target_object)
+        # self._obj = target_object
 
     # WRITE CODE HERE
+    def __getattr__(self, attrName):
+        # if attrName in self.messages:
+        #     self.messages[attrName] += 1
+        # else: self.messages[attrName]=1
+        self._messages.append(attrName) 
+        return object.__getattribute__(self._obj, attrName)
+    
+    def __setattr__(self, attrName, value) -> None:
+        # self.messages.append(attrName)
 
+        # super().__setattr__(attrName, value)
+        # setattr(self._obj, attrName, value)
+        self._messages.append(attrName)
+        object.__setattr__(self._obj, attrName, value)
+    
+    def messages(self):
+        return self._messages
+    
+    def was_called(self, attr_name):
+        return attr_name in self._messages
+    
+    def number_of_times_called(self, method):
+        return self._messages.count(method)
+
+
+        
 # The proxy object should pass the following Koan:
 #
 class AboutProxyObjectProject(Koan):
@@ -50,6 +77,7 @@ class AboutProxyObjectProject(Koan):
 
         tv.power()
         tv.channel = 10
+        print(tv.messages())
 
         self.assertEqual(['power', 'channel'], tv.messages())
 
